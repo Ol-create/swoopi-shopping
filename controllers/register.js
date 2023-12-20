@@ -1,8 +1,7 @@
-import express from "express";
 import bcrypt from "bcrypt";
 import pool from "../config/db";
 
-async function register() {
+async function register(req, res) {
   const { name, email, password, userType } = req.body;
 
   // Hash and salt the password before storing it
