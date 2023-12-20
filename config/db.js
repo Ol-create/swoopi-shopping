@@ -1,35 +1,38 @@
-import { Pool } from "pg";
+import pg from "pg";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const { Pool } = pg;
 
 const pool = new Pool({
-  user: "oluola96",
-  password: "oluola1992",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   host: "localhost",
   database: "Food Delivery",
-  post: "5432",
+  port: 5432, 
 });
 
-// Query to Create Tables for Database
-
-const createTablesQuery = `
---Create User Table
-  CREATE TABLE users (
+// Query to Create User Table
+const createUsersTableQuery = `
+  CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(100) NOT NULL,
     user_type VARCHAR(50) NOT NULL CHECK (user_type IN ('customer', 'vendor'))
-);
+  );
 `;
 
-// Connect to the database and create multiple tables
+// Connect to the database and create the users table if it doesn't exist
 pool
-  .query(createTablesQuery)
+  .query(createUsersTableQuery)
   .then(() => {
-    console.log("Tables created successfully.");
-    pool.end(); // Close the connection pool
+    console.log("Users table created or already exists.");
+    // pool.end(); // Close the connection pool
   })
   .catch((err) => {
-    console.error("Error creating tables:", err);
+    console.error("Error creating users table:", err);
     pool.end(); // Close the connection pool
   });
 

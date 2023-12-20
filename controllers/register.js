@@ -1,12 +1,16 @@
 import bcrypt from "bcrypt";
-import pool from "../config/db";
+import dotenv from "dotenv";
+
+dotenv.config()
+
+import pool from "../config/db.js";
 
 async function register(req, res) {
   const { name, email, password, userType } = req.body;
 
   // Hash and salt the password before storing it
-  const salt = 10  
-  const hashedPassword = await bcrypt.hash(password, salt);
+  const saltRound = parseInt(process.env.SALT_ROUND) 
+  const hashedPassword = await bcrypt.hash(password, saltRound);
 
   try {
     const query = {

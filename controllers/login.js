@@ -1,6 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import pool from "../config/db";
+import pool from "../config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const secretKey = process.env.JWT_SECRET_KEY;
 
 async function login(req, res) {
   const { email, password } = req.body;
@@ -26,7 +31,7 @@ async function login(req, res) {
 
     const token = jwt.sign(
       { userId: user.user_id, userType: user.user_type },
-      "your_secret_key",
+      secretKey,
       { expiresIn: "1h" }
     );
 
@@ -36,3 +41,5 @@ async function login(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
+export default login;
