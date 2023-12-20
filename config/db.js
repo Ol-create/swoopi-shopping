@@ -33,3 +33,4 @@ pool
     pool.end(); // Close the connection pool
   });
 
+export default pool;
