@@ -1,4 +1,4 @@
-import db from "../config/db.js"
+import pool from "../config/db.js"
 
 // Query to Create User Table
 const createUsersTableQuery = `

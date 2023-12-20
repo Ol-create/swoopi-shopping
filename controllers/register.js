@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config()
 
-import pool from "../config/db.js";
+import pool from "../models/users.js";
 
 async function register(req, res) {
   const { name, email, password, userType } = req.body;
