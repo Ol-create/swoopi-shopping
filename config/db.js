@@ -22,6 +22,15 @@ const createUsersTableQuery = `
     password VARCHAR(100) NOT NULL,
     user_type VARCHAR(50) NOT NULL CHECK (user_type IN ('customer', 'vendor'))
   );
+
+  CREATE TABLE IF NOT EXISTS Category (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL CHECK (user_type IN ('Apparel and Fashion',
+    'Beauty and Personal Care', 'Home and Kitchen Appliances', 'Health and Wellness',
+    'Home and Kitchen Appliances', 'Toys and Games', 'Books and Stationery',
+    'Sports and Outdoor Gear',
+    'Automotive Products', 'Food and Beverages'))
+);
 `;
 
 // Connect to the database and create the users table if it doesn't exist
